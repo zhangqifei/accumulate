@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>珠峰培训</title>
+    <link charset="utf-8" type="text/css" rel="stylesheet" href="css/index.css"/>
+</head>
+<body>
+<div class="box2">
+    <div>
+        <span>姓名:</span>
+        <input type="text" id="userName"/>
+    </div>
+    <div>
+        <span>年龄:</span>
+        <input type="text" id="userAge"/>
+    </div>
+    <div>
+        <span>电话:</span>
+        <input type="text" id="userPhone"/>
+    </div>
+    <div>
+        <span>地址:</span>
+        <input type="text" id="userAddress"/>
+    </div>
+    <a href="javascript:;" class="submit" id="submit">提交</a>
+</div>
+
+<script charset="utf-8" type="text/javascript" src="js/ajax.js"></script>
+<script charset="utf-8" type="text/javascript">
+    //->在String.prototype上扩展项目中经常使用的方法
+    ~function (pro) {
+        function queryURLParameter() {
+            var query = {},
+                    reg = /([^?&=#]+)=([^?&=#]+)/g,
+                    regHash = /#([^?&=#]+)/;
+            this.replace(reg, function () {
+                var arg = arguments, key = arg[1], val = arg[2];
+                query[key] = val;
+            });
+            if (regHash.test(this)) {
+                query['hash'] = regHash.exec(this)[1];
+            }
+            return query;
+        }
+
+        pro.queryURLParameter = queryURLParameter;
+    }(String.prototype);
+
+
+    var controlRender = (function () {
+        var userName = document.getElementById('userName'),
+                userAge = document.getElementById('userAge'),
+                userPhone = document.getElementById('userPhone'),
+                userAddress = document.getElementById('userAddress'),
+                submit = document.getElementById('submit');
+        var isFlag = false,
+                customId = null;
+
+        //->bindHTML:获取当前客户信息显示在四个文本框中
+        function bindHTML() {
+            ajax({
+                url: '/getInfo?customId=' + customId,
+                success: function (jsonData) {
+                    if (jsonData && jsonData['code'] == 0) {
+                        var data = jsonData['data'];
+                        userName.value = data['name'];
+                        userAge.value = data['age'];
+                        userPhone.value = data['phone'];
+                        userAddress.value = data['address'];
+                    }
+                }
+            });
+        }
+
+        //->给我们的提交按钮绑定点击事件
+        function bindEvent() {
+            submit.onclick = function () {
+                var obj = {
+                    "name": userName.value,
+                    "age": userAge.value,
+                    "phone": userPhone.value,
+                    "address": userAddress.value
+                };
+
+                if (isFlag) {
+                    //->SEND AJAX TO UPDATE
+                    obj['id'] = customId;
+                    ajax({
+                        url: '/updateInfo',
+                        type: 'post',
+                        data: JSON.stringify(obj),
+                        success: function (jsonData) {
+                            if (jsonData && jsonData['code'] == 0) {
+                                window.location.href = 'index.html';
+                            }
+                        }
+                    });
+                    return;
+                }
+
+                //->SEND AJAX TO ADD
+                ajax({
+                    url: '/addInfo',
+                    type: 'post',
+                    data: JSON.stringify(obj),
+                    success: function (jsonData) {
+                        if (jsonData && jsonData['code'] == 0) {
+                            //->增加成功后跳转回首页
+                            window.location.href = 'index.html';
+                        }
+                    }
+                });
+            }
+        }
+
+        return {
+            init: function () {
+                //->获取当前URL地址栏传递进来的参数值
+                //window.location.href:获取当前页面的URL地址,如果让其等于一个值属于页面的跳转
+                var query = window.location.href.queryURLParameter();
+                if (typeof query['customId'] !== 'undefined') {
+                    //->当前是修改操作
+                    isFlag = true;
+                    customId = query['customId'];
+
+                    //->如果是修改操作的话,我们首先需要把客户对应的信息获取到,并且放到四个文本框中
+                    bindHTML();
+                }
+
+                //->不管是修改还是增加,都要给提交按钮绑定点击事件
+                bindEvent();
+            }
+        }
+    })();
+    controlRender.init();
+
+
+    //    var str = 'http://192.168.0.26/add.html?customId=2&name=zf&age=25#kbs';
+    //    var reg = /([^?&=#]+)=([^?&=#]+)/g,
+    //            query = {};
+    //    str.replace(reg, function () {
+    //        query[arguments[1]] = arguments[2];
+    //    });
+    //    reg = /#([^?&=#]+)/;
+    //    query['hash'] = reg.exec(str)[1];
+    //    //query['hash'] = str.substr(str.lastIndexOf('#') + 1);
+    //    console.log(query);
+
+    //->正则的捕获方法:
+    //    reg.test(str);
+    //    console.log(RegExp.$1, RegExp.$2);
+
+    //    var ary = reg.exec(str);
+    //    console.log(ary);
+
+    //    console.log(str.match(reg));
+
+    //    str.replace(reg, function () {
+    //        console.log(arguments);
+    //    });
+
+    //    var query = {
+    //        customId: 2,
+    //        name: 'zf',
+    //        age: 25
+    //    };
+</script>
+</body>
+</html>

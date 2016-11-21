@@ -1,0 +1,5 @@
+[
+    {"src":"images/banner1.jpg","title":"标题","desc":"描述"},
+    {"src":"images/banner2.jpg","title":"标题","desc":"描述"}
+
+]

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        ul, li {
+            list-style: none;
+        }
+        #box {
+            margin: 10px auto;
+            width: 500px;
+        }
+        #box ul {
+            position: relative;
+            top: 1px;
+            overflow: hidden; /*清除子元素的浮动对自己的影响*/
+        }
+        #box ul li {
+            float: left;
+            margin-right: 10px;
+            width: 100px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            border: 1px solid red;
+            cursor: pointer;
+        }
+        #box ul li.select {
+            background: lightgreen;
+            border-bottom: 1px solid lightgreen;
+        }
+        #box div {
+            display: none;
+            height: 150px;
+            line-height: 30px;
+            text-align: center;
+            border: 1px solid red;
+        }
+        #box div.select {
+            display: block;
+            background: lightgreen;
+        }
+    </style>
+</head>
+<body>
+<div id="box">
+    <ul>
+        <li class="select">CSS</li>
+        <li>全栈</li>
+        <li>移动端</li>
+    </ul>
+    <div class="select">HTML+CSS:随便一个网站静态布局都能做了</div>
+    <div>全栈:流行的框架和思想会了,原生JS也熟练了,自己可以只用JS写一套整站开发(前后台都自己做)</div>
+    <div>移动端:不管是什么移动端页面,要做多响应,都可以做,不仅如此而且从性能优化上,不亚于BAT的优化</div>
+</div>
+<script type="text/javascript">
+    var box = document.getElementById("box");
+    var oLis = box.getElementsByTagName("li");
+    var oDivs = box.getElementsByTagName("div");
+
+    function tabChange(n) {
+        for (var i = 0; i < oLis.length; i++) {
+            oLis[i].className = null;
+            oDivs[i].className = null;
+        }
+        oLis[n].className = "select";
+        oDivs[n].className = "select";
+    }
+
+    //    for (var i = 0; i < oLis.length; i++) {
+    //        oLis[i].onclick = function () {
+    //            tabChange(i);
+    //        }
+    //    }
+    //->分析上述循环绑定不行的原因?
+
+    //1、自定义属性
+    //    for (var i = 0; i < oLis.length; i++) {
+    //        oLis[i].index = i;
+    //        oLis[i].onclick = function () {
+    //            tabChange(this.index);
+    //        }
+    //    }
+
+    //2、使用闭包->画图并且分析为什么可以
+    //    for (var i = 0; i < oLis.length; i++) {
+    //        (function (i) {
+    //            oLis[i].onclick = function () {
+    //                tabChange(i);
+    //            }
+    //        })(i);
+    //    }
+
+    for (var i = 0; i < oLis.length; i++) {
+        oLis[i].onclick = (function (i) {
+            return function () {
+                tabChange(i);
+            }
+        })(i);
+    }
+</script>
+</body>
+</html>

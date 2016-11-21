@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>3D魔方</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+    <div class="cube">
+        <div class="front">
+            <div class="unit clear_border-right clear_border-bottom"></div>
+            <div class="unit clear_border-right clear_border-bottom"></div>
+            <div class="unit clear_border-bottom"></div>
+            <div class="unit clear_border-right clear_border-bottom"></div>
+            <div class="unit clear_border-right clear_border-bottom"></div>
+            <div class="unit clear_border-bottom"></div>
+            <div class="unit clear_border-right"></div>
+            <div class="unit clear_border-right"></div>
+            <div class="unit"></div>
+        </div>
+        <div class="back">
+            <div class="unit clear_border-right clear_border-bottom"></div>
+            <div class="unit clear_border-right clear_border-bottom"></div>
+            <div class="unit clear_border-bottom"></div>
+            <div class="unit clear_border-right clear_border-bottom"></div>
+            <div class="unit clear_border-right clear_border-bottom"></div>
+            <div class="unit clear_border-bottom"></div>
+            <div class="unit clear_border-right"></div>
+            <div class="unit clear_border-right"></div>
+            <div class="unit"></div>
+        </div>
+        <div class="left">
+            <div class="unit clear_border-right clear_border-bottom"></div>
+            <div class="unit clear_border-right clear_border-bottom"></div>
+            <div class="unit clear_border-bottom"></div>
+            <div class="unit clear_border-right clear_border-bottom"></div>
+            <div class="unit clear_border-right clear_border-bottom"></div>
+            <div class="unit clear_border-bottom"></div>
+            <div class="unit clear_border-right"></div>
+            <div class="unit clear_border-right"></div>
+            <div class="unit"></div>
+        </div>
+        <div class="right">
+            <div class="unit clear_border-right clear_border-bottom"></div>
+            <div class="unit clear_border-right clear_border-bottom"></div>
+            <div class="unit clear_border-bottom"></div>
+            <div class="unit clear_border-right clear_border-bottom"></div>
+            <div class="unit clear_border-right clear_border-bottom"></div>
+            <div class="unit clear_border-bottom"></div>
+            <div class="unit clear_border-right"></div>
+            <div class="unit clear_border-right"></div>
+            <div class="unit"></div>
+        </div>
+        <div class="top">
+            <div class="unit clear_border-right clear_border-bottom"></div>
+            <div class="unit clear_border-right clear_border-bottom"></div>
+            <div class="unit clear_border-bottom"></div>
+            <div class="unit clear_border-right clear_border-bottom"></div>
+            <div class="unit clear_border-right clear_border-bottom"></div>
+            <div class="unit clear_border-bottom"></div>
+            <div class="unit clear_border-right"></div>
+            <div class="unit clear_border-right"></div>
+            <div class="unit"></div>
+        </div>
+        <div class="bottom">
+            <div class="unit clear_border-right clear_border-bottom"></div>
+            <div class="unit clear_border-right clear_border-bottom"></div>
+            <div class="unit clear_border-bottom"></div>
+            <div class="unit clear_border-right clear_border-bottom"></div>
+            <div class="unit clear_border-right clear_border-bottom"></div>
+            <div class="unit clear_border-bottom"></div>
+            <div class="unit clear_border-right"></div>
+            <div class="unit clear_border-right"></div>
+            <div class="unit"></div>
+        </div>
+    </div>
+</body>
+
+</html>
+<!-- 设置 position: absolute; 是为了让六个面堆在一起，不能设置 position: relative;  -->
+<!-- 如果元素绕 X轴旋转，那么它所在的 Y轴和 Z轴也会绕 X轴旋转；3D 元素和它所基于的 X 轴和 Y 轴在同一平面 -->

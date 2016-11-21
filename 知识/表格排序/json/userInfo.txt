@@ -1,0 +1,8 @@
+[
+{"name":"郭靖","age":24,"sex":0,"force":90},
+{"name":"黄蓉","age":20,"sex":1,"force":78},
+{"name":"杨过","age":42,"sex":0,"force":94},
+{"name":"小龙女","age":18,"sex":1,"force":92},
+{"name":"东伯雪鹰","age":23,"sex":0,"force":100},
+{"name":"余静秋","age":48,"sex":1,"force":95}
+]

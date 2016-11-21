@@ -1,0 +1,111 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.cube {
+    width: 400px;
+    height: 400px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -200px 0 0 -200px;
+    -webkit-transform-style: preserve-3d;
+    /*-webkit-perspective: 4000px;*/
+    /*-webkit-transform-origin: 50% 50% 0;*/
+    animation: rotation 4s ease infinite;
+}
+
+.front {
+    height: 100%;
+    background: #F00;
+    position: absolute;
+    -webkit-transform: translatez(200px);
+    /*opacity: 0.5;*/
+}
+
+.back {
+    height: 100%;
+    background: #FFA500;
+    position: absolute;
+    -webkit-transform: rotatex(180deg) translatez(200px);
+    /*opacity: 0.5;*/
+}
+
+.left {
+    height: 100%;
+    background: #00F;
+    position: absolute;
+    -webkit-transform: rotatey(-90deg) translatez(200px);
+    /*opacity: 0.5;*/
+}
+
+.right {
+    height: 100%;
+    background: #008000;
+    position: absolute;
+    -webkit-transform: rotatey(90deg) translatez(200px);
+    /*opacity: 0.5;*/
+}
+
+.top {
+    height: 100%;
+    background: #FFFF00;
+    position: absolute;
+    -webkit-transform: rotatex(90deg) translatez(200px);
+    /*opacity: 0.5;*/
+}
+
+.bottom {
+    height: 100%;
+    background: #FFF;
+    position: absolute;
+    -webkit-transform: rotatex(-90deg) translatez(200px);
+    /*opacity: 0.5;*/
+}
+
+.unit {
+    width: 132px;
+    height: 132px;
+    border: 1px solid #000;
+    float: left;
+}
+
+.clear_border-right {
+    border-right: 0;
+}
+
+.clear_border-bottom {
+    border-bottom: 0;
+}
+
+
+/*@-webkit-keyframes rotation {
+    0% {
+        -webkit-transform: rotate3d(0, 0, 0, 0);
+    }
+    25% {
+        -webkit-transform: rotate3d(1, 1, 0, 270deg);
+    }
+    50% {
+        -webkit-transform: rotate3d(0, 1, 1, -540deg);
+    }
+    75% {
+        -webkit-transform: rotate3d(1, 0, 1, 270deg);
+    }
+    100% {
+        -webkit-transform: rotate3d(0, 0, 0, 0);
+    }
+}*/
+
+@-webkit-keyframes rotation {
+    0% {
+        /*-webkit-transform: rotatex(90deg);*/
+    }
+    50% {
+        -webkit-transform: rotatex(90deg);
+    }
+    100% {
+        -webkit-transform: rotatez(90deg);
+    }
+}

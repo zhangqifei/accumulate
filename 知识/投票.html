@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            font-size: 20px;
+            -webkit-user-select: none;
+        }
+
+        .box {
+            margin: 20px auto;
+            padding: 20px;
+            width: 400px;
+            border: 1px solid darkkhaki;
+            border-radius: 5px;
+        }
+
+        .box h2 {
+            height: 50px;
+            line-height: 50px;
+            border-bottom: 1px dashed saddlebrown;
+        }
+
+        .box .submitBtn {
+            margin-top: 20px;
+            height: 35px;
+            line-height: 35px;
+            text-align: center;
+            border: 1px solid darkkhaki;
+            cursor: pointer;
+            background: cornsilk;
+        }
+
+        .box .submitBtn span {
+            font-size: 26px;
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <h2>认为刘琳杰长得丑的，狂点赞~~(*^__^*)</h2>
+
+    <div class="submitBtn" id="submitBtn">我非常的同意 [ <span>100</span> ]</div>
+</div>
+
+<script type="text/javascript">
+    var submitBtn = document.getElementById("submitBtn");
+    var voteCount = submitBtn.getElementsByTagName("span")[0];
+
+    //->不行,每一次点击执行函数都会形成一个新的私有的作用域,count每一次都是从100开始累加,所以不管点击多少次都应该是101 ->count的值没有随着每一次的点击保留下来
+    //    submitBtn.onclick = function () {
+    //        var count = 100;
+    //        count++;
+    //        voteCount.innerHTML = count;
+    //    }
+
+    //->利用全局作用域不销毁来存储我们的count值:把count设置为全局变量了(但是一般在项目中,为了防止全局变量的冲突和污染,我们尽量减少全局变量的使用)
+    //    var count = 100;
+    //    submitBtn.onclick = function () {
+    //        count++;//->让全局变量count的值在进行累加
+    //        voteCount.innerHTML = count;
+    //    }
+
+    //->自己创建一个私有的不销毁的作用域来保存count就可以
+    //自执行函数中的那个给事件绑定的小函数(堆内存)被函数外面submitBtn.onclick给占用了，此时自执行函数形成的那个私有的作用域就不销毁了,count也就能存储下来了
+        (function () {
+            var count = 100;
+            submitBtn.onclick = function () {
+                count++;
+                voteCount.innerHTML = count;
+            }
+        })();
+        submitBtn.onclick = (function () {
+            var count = 100;
+            return function () {
+                count++;
+                voteCount.innerHTML = count;
+            }
+        })();
+
+    //->自定义属性存储的方式
+    //    voteCount.count = 100;
+    //    submitBtn.onclick = function () {
+    //        voteCount.innerHTML = ++voteCount.count;
+    //    };
+
+    //->利用innerHTML本身既可以获取原有的,也可以设置新的内容
+    //    submitBtn.onclick = function () {
+    //        voteCount.innerHTML++;
+    //    };
+</script>
+</body>
+</html>

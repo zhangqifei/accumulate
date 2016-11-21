@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>珠峰培训</title>
+    <link charset="utf-8" type="text/css" rel="stylesheet" href="css/index.css"/>
+</head>
+<body>
+<div class="box">
+    <a href="add.html" class="link">增加客户信息</a>
+
+    <h2>
+        <span class="w50">编号</span>
+        <span class="w150">姓名</span>
+        <span class="w50">年龄</span>
+        <span class="w200">电话</span>
+        <span class="w200">地址</span>
+        <span class="w150">操作</span>
+    </h2>
+    <ul id="boxList">
+        <!--<li>
+            <span class="w50">编号</span>
+            <span class="w150">姓名</span>
+            <span class="w50">年龄</span>
+            <span class="w200">电话</span>
+            <span class="w200">地址</span>
+            <span class="w150 control">
+                <a href="javascript:;">修改</a>
+                <a href="javascript:;">删除</a>
+            </span>
+        </li>-->
+    </ul>
+</div>
+<script charset="utf-8" type="text/javascript" src="js/ajax.js"></script>
+<script charset="utf-8" type="text/javascript">
+    //->在真实项目中我们可以使用单例模式来开
+    //把实现客户操作的所有功能都放在同一个命名空间下
+    var customRender = (function () {
+        var boxList = document.getElementById('boxList');
+
+        //->bindHTML:获取所有的客户信息,然后实现数据的绑定
+        function bindHTML(data) {
+            var str = '';
+            for (var i = 0, len = data.length; i < len; i++) {
+                var curData = data[i];
+                str += '<li>';
+                str += '<span class="w50">' + curData['id'] + '</span>';
+                str += '<span class="w150">' + curData['name'] + '</span>';
+                str += '<span class="w50">' + curData['age'] + '</span>';
+                str += '<span class="w200">' + curData['phone'] + '</span>';
+                str += '<span class="w200">' + curData['address'] + '</span>';
+                str += '<span class="w150 control">';
+                str += '<a href="add.html?customId=' + curData['id'] + '">修改</a>';
+                str += '<a href="javascript:;" customId="' + curData['id'] + '">删除</a>';
+                str += '</span>';
+                str += '</li>';
+            }
+            boxList.innerHTML = str;
+            //->"自定义属性思想":在数据绑定的时候,我们一般都会设置一些自定义属性,这样在后期事件操作过程中，如果需要使用数据的话，直接到对应的HTML结构上获取自定义属性值即可
+        }
+
+        //->bindEvent:实现删除操作(事件委托)
+        function bindEvent() {
+            boxList.onclick = function (ev) {
+                ev = ev || window.event;
+                var tar = ev.target || ev.srcElement,
+                        tarTag = tar.tagName.toUpperCase();
+                //->点击的是删除按钮
+                if (tarTag === 'A' && tar.innerHTML === '删除') {
+                    //ALERT:提示框 CONFIRM:确认框 PROMPT:输入框
+                    var customId = tar.getAttribute('customId'),
+                            flag = window.confirm('您确定要删除编号为 [ ' + customId + ' ] 的客户吗?');
+                    if (flag) {//->确定
+                        //->发送AJAX请求,实现数据的删除
+                        ajax({
+                            url: '/removeInfo?customId=' + customId,
+                            success: function (jsonData) {
+                                if (jsonData && jsonData['code'] == 0) {
+                                    //->删除成功后在页面中把对应的LI移除
+                                    boxList.removeChild(tar.parentNode.parentNode);
+                                }
+                            }
+                        });
+                    }
+                }
+            }
+        }
+
+        return {
+            init: function () {
+                //->SEND AJAX GET DATA
+                ajax({
+                    url: '/getList',
+                    success: function (jsonData) {
+                        if (jsonData && jsonData['code'] == 0) {
+                            //->1)BIND HTML
+                            bindHTML(jsonData['data']);
+
+                            //->2)DELETE
+                            bindEvent();
+                        }
+                    }
+                });
+            }
+        }
+    })();
+    customRender.init();
+
+
+</script>
+</body>
+</html>

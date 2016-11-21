@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *{margin: 0; padding: 0;}
+        #div{position: relative; width: 1000px; height: 300px; margin: 30px auto; background: #ccc; }
+        #div div{
+            position: absolute;
+            background: url("banner1.jpg") no-repeat;
+        }
+    </style>
+</head>
+<body>
+    <div id="div">
+    </div>
+</body>
+</html>
+<script src="utils.js"></script>
+<script src="tweenEffect.js"></script>
+<script>
+    var rows = 3;
+    var cols = 10;
+    var oDiv = document.getElementById('div');
+    var width = oDiv.clientWidth/cols;
+    var height = oDiv.clientHeight/rows;
+    var ary = [];
+
+    for(var i=0; i<rows*cols; i++ ){
+        var div = document.createElement('div');
+        div.style.width = width + 'px';
+        div.style.height = height + 'px';
+        var l = (i%cols)*width;
+        var t = Math.floor(i/cols)*height;
+        div.l = l;
+        div.t = t;
+        div.style.left = -1000+'px';
+
+        if(Math.floor(i/cols) == 0){
+            div.style.top = t - 250 +"px";
+        }else if(Math.floor(i/cols) == 1){
+            div.style.top = t +"px";
+        }else if(Math.floor(i/cols) == 2){
+            div.style.top = t + 200 +"px";
+        }
+
+        div.style.backgroundPosition = -l + 'px -'+t + "px";
+        ary.push(div);
+        oDiv.appendChild(div);
+    }
+    for(var i=0; i<ary.length; i++){
+        (function (i){
+            window.setTimeout(function (){
+                animate(ary[i],{left: ary[i].l, top: ary[i].t},500);
+            },i%cols*150);
+        })(i);
+
+    }
+
+</script>

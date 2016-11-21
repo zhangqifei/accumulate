@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>轮播图渐显版</title>
+    <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+    <div id="banner1" class="banner">
+        <div class="bannerInner"></div>
+        <ul class="focusList"></ul>
+        <a class="left" href="javascript:void 0"></a>
+        <a class="right" href="javascript:void 0"></a>
+    </div>
+
+    <div id="banner2" class="banner">
+        <div class="bannerInner"></div>
+        <ul class="focusList"></ul>
+        <a class="left" href="javascript:void 0"></a>
+        <a class="right" href="javascript:void 0"></a>
+    </div>
+
+
+    <div id="banner3" class="banner">
+        <div class="bannerInner"></div>
+        <ul class="focusList"></ul>
+        <a class="left" href="javascript:void 0"></a>
+        <a class="right" href="javascript:void 0"></a>
+    </div>
+    <script src="js/utils.js"></script>
+    <script src="js/tweenEffect.js"></script>
+    <script src="js/bannerClass.js"></script>
+    <script>
+        var banner1 = new Banner('banner1','data.txt',2000).init(); //初始化一个实例
+        //var banner2 = new Banner('banner2','data2.txt',3000).init();
+        //var banner3 = new Banner('banner3','data3.txt',4000);
+        console.dir(banner1);
+    </script>
+<!--
+    <script type="text/javascript" charset="utf-8" src="js/banner.js"></script>
+-->
+   <!-- <script>
+        var banner1 = new Banner(banner1);
+        var banner2 = new Banner(banner2);
+
+    </script>-->
+</body>
+</html>
